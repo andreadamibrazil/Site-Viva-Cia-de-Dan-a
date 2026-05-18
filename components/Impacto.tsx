@@ -3,12 +3,12 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const stats = [
-  { icon: "👥", value: "+350 MIL", label: "ESPECTADORES" },
-  { icon: "🏛️", value: "48", label: "EQUIPAMENTOS CULTURAIS" },
-  { icon: "📍", value: "27", label: "CIDADES" },
-  { icon: "🏆", value: "21+", label: "PRÊMIOS E EDITAIS" },
-  { icon: "🖼️", value: "20 MIL+", label: "IMAGENS ARQUIVADAS" },
-  { icon: "📅", value: "12 ANOS", label: "DE HISTÓRIA" },
+  { value: "+350 MIL", label: "ESPECTADORES" },
+  { value: "48", label: "EQUIPAMENTOS CULTURAIS" },
+  { value: "27", label: "CIDADES" },
+  { value: "21+", label: "PRÊMIOS E EDITAIS" },
+  { value: "20 MIL+", label: "IMAGENS ARQUIVADAS" },
+  { value: "12 ANOS", label: "DE HISTÓRIA" },
 ];
 
 export function Impacto() {
@@ -55,7 +55,6 @@ export function Impacto() {
               transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
               className="flex flex-col gap-1"
             >
-              <span className="text-xl mb-1">{s.icon}</span>
               <span className="font-display font-bold text-terra text-lg leading-tight">{s.value}</span>
               <span className="text-terra/50 text-[10px] tracking-[0.1em] uppercase leading-tight">{s.label}</span>
             </motion.div>

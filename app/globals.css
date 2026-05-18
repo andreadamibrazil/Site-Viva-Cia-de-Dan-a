@@ -1,16 +1,49 @@
 @import "tailwindcss";
 
 @theme {
-  --color-oceano: #062B4F;
-  --color-atmosfera: #006DB2;
-  --color-areia: #EDE5D8;
-  --color-brisa: #F7F7F2;
-  --color-dourado: #C79A42;
-  --color-verde: #526B52;
-  --color-terra: #111111;
+  /* === CORES === */
+  --color-oceano:     #062B4F;
+  --color-atmosfera:  #006DB2;
+  --color-areia:      #EDE5D8;
+  --color-brisa:      #F7F7F2;
+  --color-dourado:    #C79A42;
+  --color-verde:      #526B52;
+  --color-terra:      #111111;
 
+  /* === TIPOGRAFIA === */
   --font-display: "Plus Jakarta Sans", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --font-body:    "Inter", sans-serif;
+
+  /* === RAIO — hierarquia sharp/arquitetural ===
+   * none → bordas, divisores, elementos estruturais
+   * xs   → tags, badges, micro elementos inline
+   * sm   → cards, containers (padrão do sistema)
+   * md   → botões, inputs interativos
+   * pill → pílulas, indicadores arredondados
+   */
+  --radius-none: 0px;
+  --radius-xs:   2px;
+  --radius-sm:   3px;
+  --radius-md:   6px;
+  --radius-pill: 9999px;
+
+  /* === SOMBRAS — tintadas com oceano ===
+   * Elevação em 4 estágios.
+   * sm  → hover de card
+   * md  → elemento elevado (dropdown, tooltip)
+   * lg  → overlay, modal
+   * glow → destaque dourado (CTA, tag ativa)
+   */
+  --shadow-sm:   0 1px 4px rgba(6,43,79,0.15);
+  --shadow-md:   0 4px 16px rgba(6,43,79,0.20);
+  --shadow-lg:   0 12px 40px rgba(6,43,79,0.28);
+  --shadow-glow: 0 0 32px rgba(199,154,66,0.18);
+}
+
+/* Curvas de easing — usar via var() nos componentes */
+:root {
+  --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo: cubic-bezier(0.70, 0, 0.84, 0);
 }
 
 html {
@@ -31,4 +64,23 @@ body {
 
 @media (pointer: coarse) {
   * { cursor: auto; }
+}
+
+@layer utilities {
+  /* Eyebrow — label de seção (usado em todo o site) */
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Esconde scrollbar mas mantém scroll funcional */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

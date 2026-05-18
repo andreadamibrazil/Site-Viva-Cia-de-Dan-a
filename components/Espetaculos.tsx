@@ -1,23 +1,51 @@
 "use client";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import Image from "next/image";
+import { urlFor } from "@/sanity/lib/image";
+import type { EspetaculoType } from "@/sanity/lib/queries";
 
-const shows = [
-  { title: "Flores", year: "2012", tag: "ORIGEM DA CIA", color: "#C79A42" },
-  { title: "Entre Atos", year: "2012/13", tag: null, color: null },
-  { title: "Petite Danse", year: "2012", tag: null, color: null },
-  { title: "BoraDançar", year: "2013/14", tag: "SOCIAL", color: "#526B52" },
-  { title: "Pé de Cachimbo", year: "2014", tag: "EM CARTAZ", color: "#526B52", live: true },
-  { title: "Aquarela Carioca", year: "2015/16", tag: null, color: null },
-  { title: "Sobre as Ondas do Mar", year: "2015", tag: null, color: null },
-  { title: "Fina Camada & Mambembes", year: "2016/19", tag: null, color: null },
-  { title: "Entre Solos & Canções", year: "2021", tag: null, color: null },
-  { title: "Curu-MIM", year: "2022", tag: "SESC 2024", color: "#006DB2" },
-  { title: "Raízes e Ancestralidade", year: "2024", tag: null, color: null },
-  { title: "Labirinthus Fantástico", year: "2027", tag: "EM CRIAÇÃO", color: "#C79A42" },
+type ShowCard = {
+  title: string;
+  year: string;
+  tag: string | null;
+  color: string | null;
+  photo: string | null;
+  live?: boolean;
+};
+
+const FALLBACK_SHOWS: ShowCard[] = [
+  { title: "Flores", year: "2012", tag: "ORIGEM DA CIA", color: "#C79A42", photo: "/fotos/movirio-stage.jpg" },
+  { title: "Entre Atos", year: "2012/13", tag: null, color: null, photo: null },
+  { title: "Petite Danse", year: "2012", tag: null, color: null, photo: null },
+  { title: "BoraDançar", year: "2013/14", tag: "SOCIAL", color: "#526B52", photo: null },
+  { title: "Pé de Cachimbo", year: "2014", tag: "EM CARTAZ", color: "#526B52", live: true, photo: "/fotos/pe-de-cachimbo.jpg" },
+  { title: "Aquarela Carioca", year: "2015/16", tag: null, color: null, photo: "/fotos/hero.jpg" },
+  { title: "Sobre as Ondas do Mar", year: "2015", tag: null, color: null, photo: "/fotos/performance-duo.jpg" },
+  { title: "Fina Camada & Mambembes", year: "2016/19", tag: null, color: null, photo: "/fotos/ensemble-stage.jpg" },
+  { title: "Entre Solos & Canções", year: "2021", tag: null, color: null, photo: null },
+  { title: "Curu-MIM", year: "2022", tag: "SESC 2024", color: "#006DB2", photo: "/fotos/curumim-poster.jpg" },
+  { title: "Raízes e Ancestralidade", year: "2024", tag: null, color: null, photo: "/fotos/curumim-palco.jpg" },
+  { title: "Labirinthus Fantástico", year: "2027", tag: "EM CRIAÇÃO", color: "#C79A42", photo: null },
 ];
 
-export function Espetaculos() {
+function sanityToShow(e: EspetaculoType): ShowCard {
+  return {
+    title: e.titulo,
+    year: e.ano,
+    tag: e.tag ?? null,
+    color: e.emCartaz ? "#526B52" : null,
+    live: e.emCartaz ?? false,
+    photo: e.foto ? urlFor(e.foto).width(576).height(640).url() : null,
+  };
+}
+
+export function Espetaculos({ sanityShows }: { sanityShows?: EspetaculoType[] }) {
+  const shows: ShowCard[] =
+    sanityShows && sanityShows.length > 0
+      ? sanityShows.map(sanityToShow)
+      : FALLBACK_SHOWS;
+
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -88,7 +116,7 @@ function ShowCard({
   index,
   inView,
 }: {
-  show: (typeof shows)[0];
+  show: ShowCard;
   index: number;
   inView: boolean;
 }) {
@@ -104,7 +132,7 @@ function ShowCard({
       className="shrink-0 w-64 md:w-72 overflow-hidden rounded-sm"
       style={{ scrollSnapAlign: "start" }}
     >
-      {/* Foto placeholder */}
+      {/* Foto */}
       <div
         className="relative h-80 overflow-hidden"
         style={{
@@ -113,12 +141,23 @@ function ShowCard({
           transition: "transform 0.4s ease",
         }}
       >
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: "radial-gradient(ellipse at 50% 40%, rgba(199,154,66,0.15) 0%, transparent 70%)",
-          }}
-        />
+        {show.photo ? (
+          <Image
+            src={show.photo}
+            alt={show.title}
+            fill
+            className="object-cover object-center transition-transform duration-500"
+            style={{ transform: hovered ? "scale(1.05)" : "scale(1)" }}
+            sizes="(max-width: 768px) 256px, 288px"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: "radial-gradient(ellipse at 50% 40%, rgba(199,154,66,0.15) 0%, transparent 70%)",
+            }}
+          />
+        )}
         {/* Overlay hover */}
         <div
           className="absolute inset-0 bg-terra/40 flex items-center justify-center transition-opacity duration-300"

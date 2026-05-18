@@ -1,6 +1,7 @@
 "use client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 export function PeDeCachimbo() {
   const ref = useRef(null);
@@ -11,16 +12,22 @@ export function PeDeCachimbo() {
       ref={ref}
       className="relative min-h-screen flex items-center py-24 px-6 overflow-hidden"
       id="pe-de-cachimbo"
-      style={{
-        background: "linear-gradient(135deg, #062B4F 0%, #006DB2 100%)",
-      }}
     >
-      {/* Overlay decorativo */}
+      {/* Foto de fundo */}
+      <div className="absolute inset-0">
+        <Image
+          src="/fotos/pe-de-cachimbo.jpg"
+          alt="Pé de Cachimbo — Vivá Cia de Dança"
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+      </div>
+      {/* Overlay escuro */}
       <div
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0"
         style={{
-          backgroundImage:
-            "radial-gradient(ellipse at 20% 50%, rgba(199,154,66,0.4) 0%, transparent 50%)",
+          background: "linear-gradient(135deg, rgba(6,43,79,0.92) 0%, rgba(0,109,178,0.85) 100%)",
         }}
       />
 

@@ -11,8 +11,16 @@ import { Impacto } from "@/components/Impacto";
 import { Noticias } from "@/components/Noticias";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
+import { client } from "@/sanity/lib/client";
+import { espetaculosQuery, noticiasQuery } from "@/sanity/lib/queries";
+import type { EspetaculoType, NoticiaType } from "@/sanity/lib/queries";
 
-export default function Home() {
+export default async function Home() {
+  const [espetaculos, noticias] = await Promise.all([
+    client.fetch<EspetaculoType[]>(espetaculosQuery).catch(() => [] as EspetaculoType[]),
+    client.fetch<NoticiaType[]>(noticiasQuery).catch(() => [] as NoticiaType[]),
+  ]);
+
   return (
     <main>
       <div className="relative">
@@ -22,12 +30,12 @@ export default function Home() {
       <Manifesto />
       <Numeros />
       <MissaoVisao />
-      <Espetaculos />
+      <Espetaculos sanityShows={espetaculos} />
       <Timeline />
       <PeDeCachimbo />
       <Marquee />
       <Impacto />
-      <Noticias />
+      <Noticias sanityNoticias={noticias} />
       <Newsletter />
       <Footer />
     </main>

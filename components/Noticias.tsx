@@ -1,33 +1,39 @@
 "use client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
+import { urlFor } from "@/sanity/lib/image";
+import type { NoticiaType } from "@/sanity/lib/queries";
 
-const noticias = [
-  {
-    date: "12 MAI 2024",
-    title: "Vivá estreia nova criação no Teatro Municipal Carlos Gomes",
-    img: "dance-1",
-  },
-  {
-    date: "28 ABR 2024",
-    title: "Projeto educativo leva dança para escolas públicas do Rio",
-    img: "dance-2",
-  },
-  {
-    date: "15 ABR 2024",
-    title: "Pé de Cachimbo completa 10 anos em cartaz com temporada especial",
-    img: "dance-3",
-  },
-  {
-    date: "02 ABR 2024",
-    title: "Circulação 2024 passa por 7 estados brasileiros com Curu-MIM",
-    img: "dance-4",
-  },
+type NoticiaCard = { date: string; title: string; photo: string | null };
+
+const FALLBACK_NOTICIAS: NoticiaCard[] = [
+  { date: "12 MAI 2026", title: "Vivá apresenta nova criação no Teatro Municipal Carlos Gomes", photo: "/fotos/movirio-stage.jpg" },
+  { date: "28 ABR 2026", title: "Projeto educativo leva dança para escolas públicas do Rio", photo: "/fotos/curumim-palco.jpg" },
+  { date: "15 ABR 2026", title: "Pé de Cachimbo completa 10 anos em cartaz com temporada especial", photo: "/fotos/pe-de-cachimbo.jpg" },
+  { date: "02 ABR 2026", title: "Circulação 2024 passa por 7 estados brasileiros com Curu-MIM", photo: "/fotos/curumim-stage.jpg" },
 ];
 
-const placeholderColors = ["#0a3d6b", "#083259", "#0c4575", "#062B4F"];
+function formatDate(iso: string): string {
+  return new Date(iso + "T12:00:00").toLocaleDateString("pt-BR", {
+    day: "2-digit", month: "short", year: "numeric",
+  }).toUpperCase().replace(".", "");
+}
 
-export function Noticias() {
+function sanityToNoticia(n: NoticiaType): NoticiaCard {
+  return {
+    date: formatDate(n.data),
+    title: n.titulo,
+    photo: n.foto ? urlFor(n.foto).width(400).height(300).url() : null,
+  };
+}
+
+export function Noticias({ sanityNoticias }: { sanityNoticias?: NoticiaType[] }) {
+  const noticias: NoticiaCard[] =
+    sanityNoticias && sanityNoticias.length > 0
+      ? sanityNoticias.map(sanityToNoticia)
+      : FALLBACK_NOTICIAS;
+
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -62,18 +68,17 @@ export function Noticias() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group"
             >
-              {/* Foto placeholder */}
-              <div
-                className="h-48 mb-4 overflow-hidden"
-                style={{ backgroundColor: placeholderColors[i] }}
-              >
-                <div
-                  className="h-full w-full transition-transform duration-500 group-hover:scale-105"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(ellipse at 50% 40%, rgba(199,154,66,0.1) 0%, transparent 70%)",
-                  }}
-                />
+              <div className="relative h-48 mb-4 overflow-hidden bg-oceano">
+                {n.photo && (
+                  <Image
+                    src={n.photo}
+                    alt={n.title}
+                    fill
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    unoptimized={n.photo.startsWith("https://")}
+                  />
+                )}
               </div>
               <p className="text-terra/40 text-[10px] tracking-[0.15em] uppercase mb-2">{n.date}</p>
               <h3 className="text-terra font-semibold text-sm leading-snug mb-3 group-hover:text-atmosfera transition-colors">

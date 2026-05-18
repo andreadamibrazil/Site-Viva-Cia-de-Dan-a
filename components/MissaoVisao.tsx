@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 const cols = [
   {
@@ -44,19 +45,23 @@ export function MissaoVisao() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative min-h-[320px] md:min-h-[480px] overflow-hidden"
-            style={{
-              background: "linear-gradient(180deg, #0a3d6b 0%, #062B4F 100%)",
-            }}
           >
+            <Image
+              src="/fotos/ensemble-stage.jpg"
+              alt="Vivá Cia de Dança em cena"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
             <div
-              className="absolute inset-0 opacity-30"
+              className="absolute inset-0 opacity-50"
               style={{
                 backgroundImage:
-                  "radial-gradient(ellipse at 50% 60%, rgba(199,154,66,0.2) 0%, transparent 70%)",
+                  "linear-gradient(to top, rgba(6,43,79,0.8) 0%, transparent 60%)",
               }}
             />
             <div className="absolute bottom-8 left-8">
-              <p className="text-areia/40 text-xs tracking-[0.2em] uppercase">
+              <p className="text-areia/60 text-xs tracking-[0.2em] uppercase">
                 Rio de Janeiro · 2012–2026
               </p>
             </div>

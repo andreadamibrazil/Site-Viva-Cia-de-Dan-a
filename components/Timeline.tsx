@@ -1,33 +1,28 @@
 "use client";
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { Tag, tagVariant } from "@/components/ui/Tag";
 
 const events = [
-  { year: "2012", title: "Nasce a Vivá", desc: "Prêmio Novos Coreógrafos da Prefeitura do Rio", tag: "ORIGEM" },
-  { year: "2014", title: "Copa do Mundo FIFA", desc: "Coreógrafo da cerimônia de encerramento · Brasil", tag: "MARCO NACIONAL" },
-  { year: "2016", title: "Jogos Olímpicos Rio 2016", desc: "Abertura com Deborah Colker · Edital Fomento Cidade Olímpica", tag: "MARCO NACIONAL" },
-  { year: "2018", title: "MoviRio Festival", desc: "34 companhias · 4 linguagens · 1ª edição", tag: "LEGADO" },
-  { year: "2020", title: "4 prêmios em um ano", desc: "Arte-Escola, Fomento a Todas as Artes, Zonas de Cultura, Ondas da Cultura", tag: null },
-  { year: "2023", title: "MICA Argentina", desc: "Único representante do Brasil · Ministério da Cultura", tag: "INTERNACIONAL" },
-  { year: "2024", title: "Sesc RJ Pulsar", desc: "Curu-MIM em 7 unidades · Sessões Azuis para autistas", tag: null },
-  { year: "2026", title: "Prêmio Mestres e Mestras da Dança", desc: "Reconhecimento pela trajetória de 14 anos", tag: "ATUAL" },
+  { year: "2012", title: "Nasce a Vivá", desc: "Prêmio Novos Coreógrafos da Prefeitura do Rio de Janeiro", tag: "ORIGEM", accent: "#C79A42" },
+  { year: "2014", title: "Copa do Mundo FIFA", desc: "Coreógrafo da cerimônia de encerramento — Brasil, no Estádio do Maracanã", tag: "MARCO NACIONAL", accent: "#006DB2" },
+  { year: "2016", title: "Jogos Olímpicos Rio 2016", desc: "Abertura com Deborah Colker — Edital Fomento Cidade Olímpica", tag: "MARCO NACIONAL", accent: "#006DB2" },
+  { year: "2018", title: "MoviRio Festival", desc: "34 companhias · 4 linguagens · 1ª edição do maior festival de dança do Rio", tag: "LEGADO", accent: "#526B52" },
+  { year: "2020", title: "4 prêmios em um ano", desc: "Arte-Escola · Fomento a Todas as Artes · Zonas de Cultura · Ondas da Cultura", tag: null, accent: "#C79A42" },
+  { year: "2023", title: "MICA Argentina", desc: "Único representante do Brasil no Mercado de Indústrias Culturais — Ministério da Cultura", tag: "INTERNACIONAL", accent: "#006DB2" },
+  { year: "2024", title: "Sesc RJ Pulsar", desc: "Curu-MIM em 7 unidades do Sesc — Sessões Azuis para o público autista", tag: null, accent: "#526B52" },
+  { year: "2026", title: "Prêmio Mestres e Mestras da Dança", desc: "Reconhecimento pela trajetória de 14 anos de arte e impacto social no Rio de Janeiro", tag: "ATUAL", accent: "#C79A42" },
 ];
-
-const tagColor: Record<string, string> = {
-  ORIGEM: "#C79A42",
-  "MARCO NACIONAL": "#006DB2",
-  LEGADO: "#526B52",
-  INTERNACIONAL: "#006DB2",
-  ATUAL: "#C79A42",
-};
 
 export function Timeline() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="bg-brisa py-24 md:py-36 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <section ref={ref} className="bg-brisa py-24 md:py-36 px-6" id="historia">
+      <div className="max-w-4xl mx-auto">
+
+        {/* Header */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -39,25 +34,25 @@ export function Timeline() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display font-light italic text-terra mb-16"
-          style={{ fontSize: "clamp(28px, 4vw, 56px)" }}
+          className="font-display font-light italic text-terra mb-16 md:mb-20"
+          style={{ fontSize: "clamp(28px, 4vw, 52px)" }}
         >
           14 anos de provas.
         </motion.h2>
 
-        {/* Timeline horizontal (scroll no mobile) */}
-        <div className="overflow-x-auto scrollbar-hide">
-          <div className="relative min-w-max flex gap-0">
-            {/* Linha horizontal */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={inView ? { scaleX: 1 } : {}}
-              transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }}
-              className="absolute top-[22px] left-0 right-0 h-px bg-terra/20 origin-left"
-            />
+        {/* Timeline vertical */}
+        <div className="relative">
+          {/* Linha vertical */}
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={inView ? { scaleY: 1 } : {}}
+            transition={{ duration: 1.4, delay: 0.2, ease: "easeInOut" }}
+            className="absolute left-[88px] md:left-[112px] top-0 bottom-0 w-px bg-terra/15 origin-top"
+          />
 
+          <div className="flex flex-col gap-0">
             {events.map((ev, i) => (
-              <TimelineItem key={i} ev={ev} index={i} inView={inView} />
+              <TimelineRow key={i} ev={ev} index={i} inView={inView} />
             ))}
           </div>
         </div>
@@ -66,7 +61,7 @@ export function Timeline() {
   );
 }
 
-function TimelineItem({
+function TimelineRow({
   ev,
   index,
   inView,
@@ -75,38 +70,44 @@ function TimelineItem({
   index: number;
   inView: boolean;
 }) {
-  const [open, setOpen] = useState(false);
-  const color = ev.tag ? tagColor[ev.tag] ?? "#111111" : "#111111";
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-      className="relative w-44 md:w-52 pr-6 pt-12 cursor-pointer group"
-      onClick={() => setOpen(!open)}
+      initial={{ opacity: 0, x: -16 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.3 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      className="relative flex items-start gap-0 py-7 border-b border-terra/8 last:border-b-0 group"
     >
-      {/* Dot */}
-      <div
-        className="absolute top-[18px] left-0 w-2.5 h-2.5 rounded-full border-2 border-terra/30 bg-brisa group-hover:border-dourado group-hover:scale-150 transition-all duration-300"
-        style={{ backgroundColor: inView ? color : "transparent" }}
-      />
-
-      <p className="text-dourado font-display font-bold text-xl mb-2">{ev.year}</p>
-      <h3 className="text-terra font-semibold text-sm leading-snug mb-1">{ev.title}</h3>
-      {ev.tag && (
+      {/* Ano */}
+      <div className="w-[88px] md:w-[112px] shrink-0 pt-0.5">
         <span
-          className="text-[9px] tracking-[0.1em] uppercase px-2 py-0.5 rounded-full font-semibold mb-2 inline-block"
+          className="font-display font-bold tabular-nums leading-none transition-colors duration-200"
           style={{
-            backgroundColor: color + "18",
-            color: color,
-            border: `1px solid ${color}33`,
+            fontSize: "clamp(18px, 2vw, 22px)",
+            color: ev.accent,
           }}
         >
-          {ev.tag}
+          {ev.year}
         </span>
-      )}
-      <p className="text-terra/50 text-xs leading-relaxed mt-1">{ev.desc}</p>
+      </div>
+
+      {/* Dot na linha */}
+      <div
+        className="absolute left-[84px] md:left-[108px] top-[30px] w-[9px] h-[9px] rounded-full border-2 bg-brisa transition-all duration-300 group-hover:scale-125"
+        style={{ borderColor: ev.accent }}
+      />
+
+      {/* Conteúdo */}
+      <div className="pl-8 flex-1">
+        <div className="flex flex-wrap items-center gap-2.5 mb-1.5">
+          <h3 className="text-terra font-semibold leading-snug" style={{ fontSize: "clamp(14px, 1.5vw, 16px)" }}>
+            {ev.title}
+          </h3>
+          {ev.tag && (
+            <Tag label={ev.tag} variant={tagVariant(ev.tag)} />
+          )}
+        </div>
+        <p className="text-terra/50 text-sm leading-relaxed">{ev.desc}</p>
+      </div>
     </motion.div>
   );
 }

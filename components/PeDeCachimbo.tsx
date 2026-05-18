@@ -89,12 +89,18 @@ export function PeDeCachimbo() {
           <blockquote className="font-display font-light italic text-areia/90 leading-snug mb-8" style={{ fontSize: "clamp(18px, 2.5vw, 26px)" }}>
             "O investimento público pode gerar futuro."
           </blockquote>
-          <a
+          <motion.a
             href="#contato"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-dourado text-dourado text-sm tracking-[0.1em] uppercase hover:bg-dourado hover:text-oceano transition-all duration-300"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-dourado text-oceano text-[11px] tracking-[0.18em] uppercase font-semibold rounded-full hover:bg-dourado/90 transition-colors duration-200"
           >
-            Ingressos disponíveis →
-          </a>
+            Ingressos disponíveis
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </motion.a>
         </motion.div>
       </div>
     </section>

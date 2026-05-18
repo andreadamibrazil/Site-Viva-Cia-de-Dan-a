@@ -51,7 +51,7 @@ export function Numeros() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="p-10 md:p-14 border-b border-r border-terra/10 last:border-r-0 [&:nth-child(2)]:border-r-0 [&:nth-child(3)]:border-b-0 [&:nth-child(4)]:border-b-0 hover:-translate-y-1 transition-transform duration-300"
+              className="p-10 md:p-14 border-b border-r border-terra/10 last:border-r-0 [&:nth-child(2)]:border-r-0 [&:nth-child(3)]:border-b-0 [&:nth-child(4)]:border-b-0 hover:-translate-y-1.5 transition-transform duration-500"
             >
               <div
                 className="font-display font-bold leading-none text-dourado"

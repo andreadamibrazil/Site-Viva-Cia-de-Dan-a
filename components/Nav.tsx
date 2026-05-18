@@ -53,14 +53,14 @@ export function Nav() {
         }}
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between w-full">
-          <Logo />
+          <Logo size="md" />
           <div className="flex items-center gap-6">
             <div className="hidden md:flex items-center gap-8">
               {links.map((l) => (
                 <a
                   key={l.href}
                   href={l.href}
-                  className="text-[11px] tracking-[0.2em] text-areia/60 hover:text-dourado transition-colors duration-200 uppercase"
+                  className="text-[11px] tracking-[0.2em] text-areia/70 hover:text-dourado transition-colors duration-200 uppercase"
                 >
                   {l.label}
                 </a>
@@ -73,26 +73,27 @@ export function Nav() {
         </div>
       </motion.nav>
 
-      {/* Nav no hero — sempre visível no topo da página */}
-      <div className="absolute top-0 left-0 right-0 z-40 h-16">
+      {/* Nav no hero — logo grande, links bem visíveis */}
+      <div className="absolute top-0 left-0 right-0 z-40 h-20">
         <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <Logo />
-        <div className="flex items-center gap-6">
-          <div className="hidden md:flex items-center gap-8">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-[11px] tracking-[0.2em] text-areia/60 hover:text-dourado transition-colors duration-200 uppercase"
-              >
-                {l.label}
-              </a>
-            ))}
+          <Logo size="lg" />
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-8">
+              {links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  className="text-[11px] tracking-[0.22em] text-white/85 hover:text-dourado transition-colors duration-200 uppercase font-medium"
+                  style={{ textShadow: "0 1px 8px rgba(6,43,79,0.5)" }}
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
+            <div className="md:hidden">
+              <Hamburger open={open} onClick={toggle} />
+            </div>
           </div>
-          <div className="md:hidden">
-            <Hamburger open={open} onClick={toggle} />
-          </div>
-        </div>
         </div>
       </div>
 
@@ -114,21 +115,21 @@ function Hamburger({ open, onClick }: { open: boolean; onClick: () => void }) {
       className="relative z-[65] w-10 h-10 flex flex-col items-center justify-center gap-[5px] cursor-pointer"
     >
       <span
-        className="block w-6 h-[1.5px] bg-areia/75 origin-center"
+        className="block w-6 h-[1.5px] bg-white origin-center"
         style={{
           transition: "transform 0.32s cubic-bezier(0.16, 1, 0.3, 1)",
           transform: open ? "translateY(6.5px) rotate(45deg)" : "none",
         }}
       />
       <span
-        className="block w-4 h-[1.5px] bg-areia/75 self-end"
+        className="block w-4 h-[1.5px] bg-white self-end"
         style={{
           transition: "opacity 0.2s ease",
           opacity: open ? 0 : 1,
         }}
       />
       <span
-        className="block w-6 h-[1.5px] bg-areia/75 origin-center"
+        className="block w-6 h-[1.5px] bg-white origin-center"
         style={{
           transition: "transform 0.32s cubic-bezier(0.16, 1, 0.3, 1)",
           transform: open ? "translateY(-6.5px) rotate(-45deg)" : "none",

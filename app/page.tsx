@@ -9,7 +9,6 @@ import { PeDeCachimbo } from "@/components/PeDeCachimbo";
 import { Marquee } from "@/components/Marquee";
 import { Impacto } from "@/components/Impacto";
 import { Noticias } from "@/components/Noticias";
-import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 import { client } from "@/sanity/lib/client";
 import { espetaculosQuery, noticiasQuery } from "@/sanity/lib/queries";
@@ -36,7 +35,6 @@ export default async function Home() {
       <Marquee />
       <Impacto />
       <Noticias sanityNoticias={noticias} />
-      <Newsletter />
       <Footer />
     </main>
   );

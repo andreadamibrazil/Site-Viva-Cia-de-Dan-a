@@ -7,16 +7,35 @@ import { Espetaculos } from "@/components/Espetaculos";
 import { Timeline } from "@/components/Timeline";
 import { PeDeCachimbo } from "@/components/PeDeCachimbo";
 import { Marquee } from "@/components/Marquee";
+import { Direcao } from "@/components/Direcao";
 import { Impacto } from "@/components/Impacto";
+import { Clipping } from "@/components/Clipping";
 import { Footer } from "@/components/Footer";
 import { client } from "@/sanity/lib/client";
-import { espetaculosQuery } from "@/sanity/lib/queries";
-import type { EspetaculoType } from "@/sanity/lib/queries";
+import {
+  espetaculosQuery,
+  clippingsQuery,
+  direcaoQuery,
+} from "@/sanity/lib/queries";
+import type { EspetaculoType, ClippingType, PessoaType } from "@/sanity/lib/queries";
+import { fetchOgImage } from "@/lib/og";
 
 export default async function Home() {
-  const espetaculos = await client
-    .fetch<EspetaculoType[]>(espetaculosQuery)
-    .catch(() => [] as EspetaculoType[]);
+  const [espetaculos, clippings, direcao] = await Promise.all([
+    client.fetch<EspetaculoType[]>(espetaculosQuery).catch(() => [] as EspetaculoType[]),
+    client.fetch<ClippingType[]>(clippingsQuery).catch(() => [] as ClippingType[]),
+    client.fetch<PessoaType>(direcaoQuery).catch(() => null),
+  ]);
+
+  const ogImages: Record<string, string> = {};
+  await Promise.all(
+    clippings
+      .filter((c) => !c.imagem)
+      .map(async (c) => {
+        const img = await fetchOgImage(c.url);
+        if (img) ogImages[c._id] = img;
+      })
+  );
 
   return (
     <main>
@@ -31,8 +50,9 @@ export default async function Home() {
       <Timeline />
       <PeDeCachimbo />
       <Marquee />
+      <Direcao pessoa={direcao} />
       <Impacto />
-      {/* <Noticias /> — inativo até implementação completa */}
+      <Clipping items={clippings} ogImages={ogImages} />
       <Footer />
     </main>
   );

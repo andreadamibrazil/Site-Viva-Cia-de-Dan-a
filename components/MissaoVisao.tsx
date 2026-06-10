@@ -73,7 +73,7 @@ export function MissaoVisao() {
             initial={shouldReduce ? false : { opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2, ease }}
-            className="text-areia/45 text-sm leading-relaxed max-w-xs shrink-0"
+            className="text-areia/65 text-sm leading-relaxed max-w-xs shrink-0"
           >
             Três pilares que orientam 14 anos de criação, formação e presença no Rio de Janeiro.
           </motion.p>

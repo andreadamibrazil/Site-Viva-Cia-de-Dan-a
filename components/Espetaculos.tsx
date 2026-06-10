@@ -13,6 +13,7 @@ type ShowCard = {
   tag: string | null;
   photo: string | null;
   live?: boolean;
+  descricao?: string | null;
 };
 
 function sanityToShow(e: EspetaculoType): ShowCard {
@@ -23,6 +24,7 @@ function sanityToShow(e: EspetaculoType): ShowCard {
     tag: e.tag ?? null,
     live: e.emCartaz ?? false,
     photo: e.foto ? urlFor(e.foto).width(480).height(640).url() : null,
+    descricao: e.descricao ?? null,
   };
 }
 
@@ -110,7 +112,7 @@ export function Espetaculos({ sanityShows }: { sanityShows?: EspetaculoType[] })
               <button
                 onClick={() => scroll("left")}
                 aria-label="Anterior"
-                className="w-9 h-9 rounded-full border border-areia/15 flex items-center justify-center text-areia/50 hover:border-dourado/50 hover:text-dourado transition-colors duration-200"
+                className="w-11 h-11 rounded-full border border-areia/15 flex items-center justify-center text-areia/50 hover:border-dourado/50 hover:text-dourado transition-colors duration-200"
               >
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M8 2L4 6l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -119,7 +121,7 @@ export function Espetaculos({ sanityShows }: { sanityShows?: EspetaculoType[] })
               <button
                 onClick={() => scroll("right")}
                 aria-label="Próximo"
-                className="w-9 h-9 rounded-full border border-areia/15 flex items-center justify-center text-areia/50 hover:border-dourado/50 hover:text-dourado transition-colors duration-200"
+                className="w-11 h-11 rounded-full border border-areia/15 flex items-center justify-center text-areia/50 hover:border-dourado/50 hover:text-dourado transition-colors duration-200"
               >
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -243,9 +245,14 @@ function ShowCard({
       <p className="text-dourado/60 text-[10px] tracking-[0.18em] uppercase mb-1 tabular-nums font-mono">
         {show.year}
       </p>
-      <h3 className="text-areia/85 font-display font-semibold text-sm leading-snug">
+      <h3 className="text-areia/85 font-display font-semibold text-sm leading-snug mb-2">
         {show.title}
       </h3>
+      {show.descricao && (
+        <p className="text-areia/45 text-[11px] leading-relaxed line-clamp-3">
+          {show.descricao}
+        </p>
+      )}
     </motion.article>
   );
 }

@@ -16,7 +16,7 @@ export function PeDeCachimbo() {
       {/* Foto de fundo */}
       <div className="absolute inset-0">
         <Image
-          src="/fotos/pe-de-cachimbo.jpg"
+          src="/fotos/pe-de-cachimbo.webp"
           alt="Pé de Cachimbo — Vivá Cia de Dança"
           fill
           className="object-cover object-center"

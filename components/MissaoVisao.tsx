@@ -93,7 +93,7 @@ export function MissaoVisao() {
             style={{ y: shouldReduce ? 0 : photoY }}
           >
             <Image
-              src="/fotos/ensemble-stage.jpg"
+              src="/fotos/ensemble-stage.webp"
               alt="Vivá Cia de Dança em cena"
               fill
               className="object-cover object-[center_35%]"

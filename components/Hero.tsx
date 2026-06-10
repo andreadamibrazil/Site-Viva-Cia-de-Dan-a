@@ -28,7 +28,7 @@ export function Hero() {
         style={{ y: shouldReduce ? 0 : imageY }}
       >
         <Image
-          src="/fotos/hero.jpg"
+          src="/fotos/hero.webp"
           alt="Vivá Cia de Dança"
           fill
           priority

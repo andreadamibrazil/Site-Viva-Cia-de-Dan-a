@@ -91,13 +91,13 @@ export function PeDeCachimbo() {
             "O investimento público pode gerar futuro."
           </blockquote>
           <motion.a
-            href="#contato"
+            href="#historia"
             whileHover={shouldReduce ? {} : { scale: 1.03 }}
             whileTap={shouldReduce ? {} : { scale: 0.97 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-dourado text-oceano text-[11px] tracking-[0.18em] uppercase font-semibold rounded-full hover:bg-dourado/90 transition-colors duration-200"
           >
-            Ingressos disponíveis
+            Ver trajetória
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
               <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

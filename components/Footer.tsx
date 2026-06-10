@@ -44,8 +44,6 @@ const navLinks = [
   { label: "Contato",        href: "#contato" },
 ];
 
-const apoios = ["FUNARTE", "APRT", "Sesc RJ", "Prefeitura RJ", "Rio Cultura", "SMC"];
-
 export function Footer() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -88,12 +86,11 @@ export function Footer() {
               className="flex flex-col gap-3 md:items-end"
             >
               <a
-                href="mailto:contato@vivaciadedanca.com.br"
+                href="mailto:vivaciadedanca@gmail.com"
                 className="text-areia/70 text-base hover:text-dourado transition-colors duration-200"
               >
-                contato@vivaciadedanca.com.br
+                vivaciadedanca@gmail.com
               </a>
-              <p className="text-areia/45 text-sm">+55 21 99999-9999</p>
               <p className="text-areia/40 text-sm">Rio de Janeiro, RJ · Brasil</p>
               <div className="flex items-center gap-3 mt-2">
                 {socials.map((s) => (
@@ -118,7 +115,7 @@ export function Footer() {
 
       {/* —— Body —— */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid md:grid-cols-3 gap-10 pb-10 border-b border-areia/[0.07]">
+        <div className="grid md:grid-cols-2 gap-10 pb-10 border-b border-areia/[0.07]">
 
           {/* Logo + institucional */}
           <div>
@@ -129,11 +126,8 @@ export function Footer() {
               height={48}
               className="h-11 w-auto object-contain mb-4 opacity-85"
             />
-            <p className="text-areia/45 text-xs leading-relaxed mb-4 max-w-[220px]">
+            <p className="text-areia/45 text-xs leading-relaxed max-w-[220px]">
               Companhia de dança contemporânea fundada em 2012 no Rio de Janeiro.
-            </p>
-            <p className="text-areia/30 text-[11px] tracking-[0.1em] uppercase leading-relaxed">
-              SMC Nº 04 · Inscrição 10138
             </p>
           </div>
 
@@ -153,20 +147,6 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Apoio */}
-          <div>
-            <p className="text-areia/35 text-[11px] tracking-[0.22em] uppercase mb-5">Apoio institucional</p>
-            <div className="flex flex-wrap gap-2">
-              {apoios.map((a) => (
-                <span
-                  key={a}
-                  className="text-areia/40 text-[11px] tracking-[0.1em] border border-areia/[0.10] px-2.5 py-1 rounded-sm"
-                >
-                  {a}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Copyright */}

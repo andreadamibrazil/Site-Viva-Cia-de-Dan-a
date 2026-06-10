@@ -1,5 +1,5 @@
 "use client";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
@@ -36,8 +36,12 @@ const pillars = [
 export function MissaoVisao() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduce = useReducedMotion();
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const photoY = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"]);
+
+  const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <section ref={ref} className="bg-oceano overflow-hidden" id="missao">
@@ -45,7 +49,7 @@ export function MissaoVisao() {
       {/* —— Statement header —— */}
       <div className="max-w-7xl mx-auto px-6 pt-24 md:pt-36 pb-16">
         <motion.p
-          initial={{ opacity: 0 }}
+          initial={shouldReduce ? false : { opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           className="text-dourado text-xs tracking-[0.3em] uppercase mb-6"
         >
@@ -54,9 +58,9 @@ export function MissaoVisao() {
 
         <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-20">
           <motion.h2
-            initial={{ opacity: 0, y: 24 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, ease }}
             className="font-display font-light italic text-areia leading-none flex-1"
             style={{ fontSize: "clamp(36px, 5.5vw, 72px)" }}
           >
@@ -66,9 +70,9 @@ export function MissaoVisao() {
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, delay: 0.2, ease }}
             className="text-areia/45 text-sm leading-relaxed max-w-xs shrink-0"
           >
             Três pilares que orientam 14 anos de criação, formação e presença no Rio de Janeiro.
@@ -76,30 +80,35 @@ export function MissaoVisao() {
         </div>
       </div>
 
-      {/* —— Foto strip com parallax —— */}
-      <motion.div
-        initial={{ opacity: 0, scaleX: 0.96 }}
-        animate={inView ? { opacity: 1, scaleX: 1 } : {}}
-        transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="relative h-[220px] md:h-[280px] overflow-hidden"
-      >
-        <motion.div className="absolute inset-0" style={{ y: photoY }}>
-          <Image
-            src="/fotos/ensemble-stage.jpg"
-            alt="Vivá Cia de Dança em cena"
-            fill
-            className="object-cover object-[center_35%]"
-            sizes="100vw"
+      {/* —— Foto strip — clip-path reveal —— */}
+      <div className="relative h-[220px] md:h-[280px] overflow-hidden">
+        <motion.div
+          initial={shouldReduce ? false : { clipPath: "inset(0 100% 0 0)" }}
+          animate={inView ? { clipPath: "inset(0 0% 0 0)" } : {}}
+          transition={{ duration: 1.1, delay: 0.3, ease }}
+          className="absolute inset-0"
+        >
+          <motion.div
+            className="absolute inset-0"
+            style={{ y: shouldReduce ? 0 : photoY }}
+          >
+            <Image
+              src="/fotos/ensemble-stage.jpg"
+              alt="Vivá Cia de Dança em cena"
+              fill
+              className="object-cover object-[center_35%]"
+              sizes="100vw"
+            />
+          </motion.div>
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, rgba(6,43,79,0.7) 0%, rgba(6,43,79,0.1) 40%, rgba(6,43,79,0.1) 60%, rgba(6,43,79,0.7) 100%), linear-gradient(to bottom, rgba(6,43,79,0.4) 0%, transparent 30%, transparent 70%, rgba(6,43,79,0.8) 100%)",
+            }}
           />
         </motion.div>
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(6,43,79,0.7) 0%, rgba(6,43,79,0.1) 40%, rgba(6,43,79,0.1) 60%, rgba(6,43,79,0.7) 100%), linear-gradient(to bottom, rgba(6,43,79,0.4) 0%, transparent 30%, transparent 70%, rgba(6,43,79,0.8) 100%)",
-          }}
-        />
-      </motion.div>
+      </div>
 
       {/* —— Pilares —— */}
       <div className="max-w-7xl mx-auto px-6 pb-24 md:pb-36">
@@ -109,9 +118,9 @@ export function MissaoVisao() {
           {pillars.map((p, i) => (
             <motion.div
               key={p.num}
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduce ? false : { opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: 0.4 + i * 0.12, ease }}
               className="relative bg-oceano p-8 md:p-10 flex flex-col gap-5 overflow-hidden min-h-[280px]"
             >
               {/* Watermark */}
@@ -139,7 +148,7 @@ export function MissaoVisao() {
                 {p.heading}
               </h3>
 
-              <p className="text-areia/50 text-sm leading-[1.8] flex-1 relative z-10">
+              <p className="text-areia/55 text-sm leading-[1.8] flex-1 relative z-10">
                 {p.body}
               </p>
             </motion.div>
@@ -147,9 +156,9 @@ export function MissaoVisao() {
 
           {/* Valores */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.64, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.64, ease }}
             className="relative bg-oceano p-8 md:p-10 flex flex-col gap-5 overflow-hidden min-h-[280px]"
           >
             {/* Watermark */}
@@ -171,15 +180,15 @@ export function MissaoVisao() {
               {valores.map((v, i) => (
                 <motion.li
                   key={v}
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={shouldReduce ? false : { opacity: 0, x: -10 }}
                   animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.35, delay: 0.7 + i * 0.055, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.35, delay: 0.7 + i * 0.055, ease }}
                   className="flex items-baseline gap-3 py-2 border-b border-areia/[0.07] last:border-b-0 group"
                 >
                   <span className="font-mono text-[9px] text-dourado/25 tabular-nums shrink-0 w-5 group-hover:text-dourado/50 transition-colors duration-200">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-areia/65 text-sm leading-snug group-hover:text-areia/90 transition-colors duration-200">
+                  <span className="text-areia/70 text-sm leading-snug group-hover:text-areia/90 transition-colors duration-200">
                     {v}
                   </span>
                 </motion.li>

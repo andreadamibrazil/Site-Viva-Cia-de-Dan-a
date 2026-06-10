@@ -1,11 +1,13 @@
 "use client";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 
 export function Manifesto() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const shouldReduce = useReducedMotion();
+
+  const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   const lines = [
     "Em 2012, o Rio apostou em nós.",
@@ -16,7 +18,7 @@ export function Manifesto() {
     <section ref={ref} className="bg-terra py-24 md:py-36 px-6" id="historia">
       <div className="max-w-4xl mx-auto">
         <motion.p
-          initial={{ opacity: 0 }}
+          initial={shouldReduce ? false : { opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
           className="text-dourado text-xs tracking-[0.3em] uppercase mb-8"
@@ -28,12 +30,12 @@ export function Manifesto() {
           {lines.map((line, i) => (
             <div key={i} className="overflow-hidden">
               <motion.h2
-                initial={{ y: "100%" }}
-                animate={inView ? { y: 0 } : {}}
+                initial={shouldReduce ? false : { y: "100%", filter: "blur(6px)" }}
+                animate={inView ? { y: 0, filter: "blur(0px)" } : {}}
                 transition={{
-                  duration: 0.8,
+                  duration: 0.9,
                   delay: 0.2 + i * 0.15,
-                  ease: [0.16, 1, 0.3, 1],
+                  ease,
                 }}
                 className="font-display font-bold text-brisa leading-tight"
                 style={{ fontSize: "clamp(28px, 4vw, 52px)" }}
@@ -45,14 +47,14 @@ export function Manifesto() {
         </div>
 
         <motion.div
-          initial={{ scaleX: 0 }}
+          initial={shouldReduce ? false : { scaleX: 0 }}
           animate={inView ? { scaleX: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="h-px bg-dourado w-16 mb-8 origin-left"
         />
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduce ? false : { opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.7 }}
           className="text-areia/70 text-lg leading-relaxed max-w-2xl"

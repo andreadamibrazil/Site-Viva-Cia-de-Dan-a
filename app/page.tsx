@@ -8,17 +8,15 @@ import { Timeline } from "@/components/Timeline";
 import { PeDeCachimbo } from "@/components/PeDeCachimbo";
 import { Marquee } from "@/components/Marquee";
 import { Impacto } from "@/components/Impacto";
-import { Noticias } from "@/components/Noticias";
 import { Footer } from "@/components/Footer";
 import { client } from "@/sanity/lib/client";
-import { espetaculosQuery, noticiasQuery } from "@/sanity/lib/queries";
-import type { EspetaculoType, NoticiaType } from "@/sanity/lib/queries";
+import { espetaculosQuery } from "@/sanity/lib/queries";
+import type { EspetaculoType } from "@/sanity/lib/queries";
 
 export default async function Home() {
-  const [espetaculos, noticias] = await Promise.all([
-    client.fetch<EspetaculoType[]>(espetaculosQuery).catch(() => [] as EspetaculoType[]),
-    client.fetch<NoticiaType[]>(noticiasQuery).catch(() => [] as NoticiaType[]),
-  ]);
+  const espetaculos = await client
+    .fetch<EspetaculoType[]>(espetaculosQuery)
+    .catch(() => [] as EspetaculoType[]);
 
   return (
     <main>
@@ -34,7 +32,7 @@ export default async function Home() {
       <PeDeCachimbo />
       <Marquee />
       <Impacto />
-      <Noticias sanityNoticias={noticias} />
+      {/* <Noticias /> — inativo até implementação completa */}
       <Footer />
     </main>
   );

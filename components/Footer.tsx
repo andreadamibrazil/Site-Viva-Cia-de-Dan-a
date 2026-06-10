@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 
 const socials = [
@@ -37,11 +37,11 @@ const socials = [
 ];
 
 const navLinks = [
-  { label: "História", href: "#historia" },
-  { label: "Espetáculos", href: "#espetaculos" },
+  { label: "História",       href: "#historia" },
+  { label: "Espetáculos",    href: "#espetaculos" },
   { label: "Pé de Cachimbo", href: "#pe-de-cachimbo" },
-  { label: "Impacto", href: "#impacto" },
-  { label: "Contato", href: "#contato" },
+  { label: "Impacto",        href: "#impacto" },
+  { label: "Contato",        href: "#contato" },
 ];
 
 const apoios = ["FUNARTE", "APRT", "Sesc RJ", "Prefeitura RJ", "Rio Cultura", "SMC"];
@@ -49,6 +49,9 @@ const apoios = ["FUNARTE", "APRT", "Sesc RJ", "Prefeitura RJ", "Rio Cultura", "S
 export function Footer() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const shouldReduce = useReducedMotion();
+
+  const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <footer ref={ref} className="bg-terra" id="contato">
@@ -59,16 +62,16 @@ export function Footer() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
             <div>
               <motion.p
-                initial={{ opacity: 0 }}
+                initial={shouldReduce ? false : { opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
                 className="text-dourado text-xs tracking-[0.3em] uppercase mb-5"
               >
                 Entre em contato
               </motion.p>
               <motion.h2
-                initial={{ opacity: 0, y: 20 }}
+                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.7, ease }}
                 className="font-display font-light italic text-areia leading-tight"
                 style={{ fontSize: "clamp(28px, 4vw, 52px)" }}
               >
@@ -79,19 +82,19 @@ export function Footer() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={shouldReduce ? false : { opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: 0.2, ease }}
               className="flex flex-col gap-3 md:items-end"
             >
               <a
                 href="mailto:contato@vivaciadedanca.com.br"
-                className="text-areia/65 text-base hover:text-dourado transition-colors duration-200"
+                className="text-areia/70 text-base hover:text-dourado transition-colors duration-200"
               >
                 contato@vivaciadedanca.com.br
               </a>
-              <p className="text-areia/35 text-sm">+55 21 99999-9999</p>
-              <p className="text-areia/30 text-sm">Rio de Janeiro, RJ · Brasil</p>
+              <p className="text-areia/45 text-sm">+55 21 99999-9999</p>
+              <p className="text-areia/40 text-sm">Rio de Janeiro, RJ · Brasil</p>
               <div className="flex items-center gap-3 mt-2">
                 {socials.map((s) => (
                   <motion.a
@@ -100,9 +103,9 @@ export function Footer() {
                     aria-label={s.name}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.12 }}
+                    whileHover={shouldReduce ? {} : { scale: 1.12 }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                    className="w-9 h-9 rounded-full border border-areia/15 flex items-center justify-center text-areia/40 hover:text-areia/80 hover:border-areia/30 transition-colors duration-200"
+                    className="w-9 h-9 rounded-full border border-areia/15 flex items-center justify-center text-areia/50 hover:text-areia/85 hover:border-areia/30 transition-colors duration-200"
                   >
                     {s.icon}
                   </motion.a>
@@ -126,23 +129,23 @@ export function Footer() {
               height={48}
               className="h-11 w-auto object-contain mb-4 opacity-85"
             />
-            <p className="text-areia/30 text-xs leading-relaxed mb-4 max-w-[220px]">
+            <p className="text-areia/45 text-xs leading-relaxed mb-4 max-w-[220px]">
               Companhia de dança contemporânea fundada em 2012 no Rio de Janeiro.
             </p>
-            <p className="text-areia/20 text-[10px] tracking-[0.1em] uppercase leading-relaxed">
+            <p className="text-areia/30 text-[11px] tracking-[0.1em] uppercase leading-relaxed">
               SMC Nº 04 · Inscrição 10138
             </p>
           </div>
 
           {/* Navegação */}
           <div>
-            <p className="text-areia/25 text-[10px] tracking-[0.22em] uppercase mb-5">Navegação</p>
+            <p className="text-areia/35 text-[11px] tracking-[0.22em] uppercase mb-5">Navegação</p>
             <nav className="flex flex-col gap-2.5">
               {navLinks.map((l) => (
                 <a
                   key={l.href}
                   href={l.href}
-                  className="text-areia/45 text-sm hover:text-dourado transition-colors duration-200"
+                  className="text-areia/55 text-sm hover:text-dourado transition-colors duration-200"
                 >
                   {l.label}
                 </a>
@@ -152,12 +155,12 @@ export function Footer() {
 
           {/* Apoio */}
           <div>
-            <p className="text-areia/25 text-[10px] tracking-[0.22em] uppercase mb-5">Apoio institucional</p>
+            <p className="text-areia/35 text-[11px] tracking-[0.22em] uppercase mb-5">Apoio institucional</p>
             <div className="flex flex-wrap gap-2">
               {apoios.map((a) => (
                 <span
                   key={a}
-                  className="text-areia/25 text-[10px] tracking-[0.1em] border border-areia/[0.07] px-2.5 py-1 rounded-sm"
+                  className="text-areia/40 text-[11px] tracking-[0.1em] border border-areia/[0.10] px-2.5 py-1 rounded-sm"
                 >
                   {a}
                 </span>
@@ -168,14 +171,14 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-areia/18 text-[10px] tracking-[0.15em]">
+          <p className="text-areia/35 text-[11px] tracking-[0.15em]">
             © 2026 VIVÁ CIA DE DANÇA — TODOS OS DIREITOS RESERVADOS
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-areia/18 text-[10px] tracking-[0.1em] hover:text-areia/35 transition-colors">
+            <a href="#" className="text-areia/30 text-[11px] tracking-[0.1em] hover:text-areia/55 transition-colors">
               POLÍTICA DE PRIVACIDADE
             </a>
-            <a href="#" className="text-areia/18 text-[10px] tracking-[0.1em] hover:text-areia/35 transition-colors">
+            <a href="#" className="text-areia/30 text-[11px] tracking-[0.1em] hover:text-areia/55 transition-colors">
               TERMOS DE USO
             </a>
           </div>

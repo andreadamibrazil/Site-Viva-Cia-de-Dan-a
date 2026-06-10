@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useScroll } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useReducedMotion } from "framer-motion";
 import { Logo } from "./Logo";
 
 type NavLink = { label: string; href: string; num: string };
@@ -16,6 +16,7 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
   const { scrollYProgress }     = useScroll();
+  const shouldReduce            = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.8);
@@ -43,8 +44,12 @@ export function Nav() {
       <motion.nav
         className="fixed top-0 left-0 right-0 z-50 border-b border-areia/[0.06]"
         initial={false}
-        animate={{ y: scrolled ? 0 : -80, opacity: scrolled ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        animate={
+          shouldReduce
+            ? { opacity: scrolled ? 1 : 0 }
+            : { y: scrolled ? 0 : -80, opacity: scrolled ? 1 : 0 }
+        }
+        transition={{ duration: shouldReduce ? 0.15 : 0.4, ease: [0.16, 1, 0.3, 1] }}
         style={{
           backgroundColor: "rgba(6,43,79,0.94)",
           backdropFilter: "blur(16px)",
@@ -99,13 +104,12 @@ export function Nav() {
 
       {/* Overlay full-screen */}
       <AnimatePresence>
-        {open && <MenuOverlay links={links} onClose={close} />}
+        {open && <MenuOverlay links={links} onClose={close} shouldReduce={shouldReduce ?? false} />}
       </AnimatePresence>
     </>
   );
 }
 
-/* Botão hamburguer — transforma em X quando aberto */
 function Hamburger({ open, onClick }: { open: boolean; onClick: () => void }) {
   return (
     <button
@@ -139,8 +143,17 @@ function Hamburger({ open, onClick }: { open: boolean; onClick: () => void }) {
   );
 }
 
-/* Overlay de navegação full-screen */
-function MenuOverlay({ links, onClose }: { links: NavLink[]; onClose: () => void }) {
+function MenuOverlay({
+  links,
+  onClose,
+  shouldReduce,
+}: {
+  links: NavLink[];
+  onClose: () => void;
+  shouldReduce: boolean;
+}) {
+  const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
   return (
     <motion.div
       className="fixed inset-0 z-[55] flex flex-col"
@@ -148,9 +161,9 @@ function MenuOverlay({ links, onClose }: { links: NavLink[]; onClose: () => void
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.22, ease: "easeInOut" }}
+      transition={{ duration: shouldReduce ? 0.1 : 0.22, ease: "easeInOut" }}
     >
-      {/* Halo dourado — presença sem peso */}
+      {/* Halo dourado */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -164,13 +177,13 @@ function MenuOverlay({ links, onClose }: { links: NavLink[]; onClose: () => void
         {links.map((link, i) => (
           <motion.div
             key={link.href}
-            initial={{ opacity: 0, y: 22 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{
               duration: 0.48,
-              delay: 0.05 + i * 0.07,
-              ease: [0.16, 1, 0.3, 1],
+              delay: shouldReduce ? 0 : 0.05 + i * 0.07,
+              ease,
             }}
           >
             <a
@@ -200,10 +213,10 @@ function MenuOverlay({ links, onClose }: { links: NavLink[]; onClose: () => void
 
       {/* Rodapé do menu */}
       <div className="relative z-10 flex items-end justify-between px-8 md:px-16 lg:px-24 pb-10 md:pb-14">
-        <p className="text-areia/20 text-[10px] tracking-[0.22em] uppercase">
+        <p className="text-areia/30 text-[11px] tracking-[0.22em] uppercase">
           Rio de Janeiro · Brasil · 2012–2026
         </p>
-        <p className="text-areia/15 text-[10px] tracking-[0.2em] uppercase">
+        <p className="text-areia/25 text-[11px] tracking-[0.2em] uppercase">
           SMC Nº 04 · Inscrição 10138
         </p>
       </div>

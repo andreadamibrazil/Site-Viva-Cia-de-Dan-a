@@ -7,102 +7,151 @@ export function PeDeCachimbo() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const shouldReduce = useReducedMotion();
+  const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center py-24 px-6 overflow-hidden"
+      className="relative bg-oceano overflow-hidden min-h-screen flex items-center"
       id="pe-de-cachimbo"
     >
-      {/* Foto de fundo */}
-      <div className="absolute inset-0">
+      {/* Foto — painel direito, fade para oceano na esquerda */}
+      <div className="absolute right-0 top-0 bottom-0 w-full md:w-[58%] pointer-events-none">
         <Image
           src="/fotos/pe-de-cachimbo.webp"
           alt="Pé de Cachimbo — Vivá Cia de Dança"
           fill
-          className="object-cover object-center"
-          sizes="100vw"
+          className="object-cover object-right"
+          sizes="(max-width: 768px) 100vw, 58vw"
+        />
+        {/* Fade esquerda → oceano */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, #062B4F 0%, rgba(6,43,79,0.88) 28%, rgba(6,43,79,0.35) 58%, rgba(6,43,79,0.1) 100%)",
+          }}
+        />
+        {/* Fade topo e base */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(6,43,79,0.65) 0%, transparent 18%, transparent 82%, rgba(6,43,79,0.65) 100%)",
+          }}
         />
       </div>
-      {/* Overlay escuro */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, rgba(6,43,79,0.92) 0%, rgba(0,109,178,0.85) 100%)",
-        }}
-      />
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-16 md:gap-24 items-center">
-        {/* Esquerda — números grandes */}
-        <motion.div
-          initial={shouldReduce ? false : { opacity: 0, x: -40 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div
-            className="font-display font-bold leading-none text-dourado"
-            style={{ fontSize: "clamp(120px, 18vw, 220px)" }}
+      {/* Conteúdo */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-6 py-28 md:py-36">
+        <div className="md:max-w-[50%]">
+
+          {/* Eyebrow */}
+          <motion.p
+            initial={shouldReduce ? false : { opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5 }}
+            className="text-dourado text-xs tracking-[0.3em] uppercase mb-10"
           >
-            10
-          </div>
-          <div className="text-areia tracking-[0.3em] text-3xl md:text-4xl font-display font-light -mt-4">
-            ANOS
-          </div>
-          <div className="h-px bg-dourado/40 w-32 my-6" />
-          <div className="flex items-center gap-2">
-            <span
-              className="w-2 h-2 rounded-full bg-verde animate-pulse"
-            />
-            <span className="text-areia/70 text-sm tracking-[0.2em] uppercase">
-              Em Cartaz
-            </span>
-          </div>
+            Pé de Cachimbo · 2016
+          </motion.p>
 
-          <div className="mt-10">
+          {/* 10 — número âncora */}
+          <motion.div
+            initial={shouldReduce ? false : { opacity: 0, y: 28 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, ease }}
+          >
             <div
-              className="font-display font-bold text-dourado leading-none"
-              style={{ fontSize: "clamp(48px, 7vw, 80px)" }}
+              className="font-display font-bold leading-[0.85] text-dourado tabular-nums"
+              style={{ fontSize: "clamp(100px, 17vw, 210px)", letterSpacing: "-0.025em" }}
             >
-              165+
+              10
             </div>
-            <p className="text-areia/60 text-xs tracking-[0.2em] uppercase mt-1">Apresentações</p>
-          </div>
-        </motion.div>
 
-        {/* Direita — texto */}
-        <motion.div
-          initial={shouldReduce ? false : { opacity: 0, x: 40 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <h2 className="font-display font-light italic text-areia leading-tight mb-3" style={{ fontSize: "clamp(28px, 4vw, 52px)" }}>
-            Pé de Cachimbo
-          </h2>
-          <p className="text-dourado text-sm tracking-[0.1em] mb-6">O espetáculo que comprova.</p>
-          <p className="text-areia/70 text-base leading-relaxed mb-6 max-w-md">
+            {/* ANOS EM CARTAZ — frase completa unificada */}
+            <div className="flex items-center gap-3 mt-3 mb-10">
+              <span
+                className="font-display font-light text-areia tracking-[0.28em] uppercase"
+                style={{ fontSize: "clamp(18px, 2.8vw, 36px)" }}
+              >
+                ANOS
+              </span>
+              <span className="w-px h-5 bg-dourado/35 shrink-0" />
+              <span
+                className="font-display font-semibold text-dourado/90 tracking-[0.22em] uppercase"
+                style={{ fontSize: "clamp(14px, 1.8vw, 22px)" }}
+              >
+                EM CARTAZ
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Stats row — EM CARTAZ + 165+ */}
+          <motion.div
+            initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.28, ease }}
+            className="flex items-center gap-8 mb-10"
+          >
+            {/* EM CARTAZ badge */}
+            <div className="flex items-center gap-2.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-verde shrink-0 animate-pulse" />
+              <span className="text-areia font-display font-semibold text-sm tracking-[0.2em] uppercase">
+                Em Cartaz
+              </span>
+            </div>
+
+            <div className="w-px h-6 bg-areia/[0.12] shrink-0" />
+
+            {/* 165+ apresentações */}
+            <div className="flex items-baseline gap-2">
+              <span
+                className="font-display font-bold text-dourado leading-none tabular-nums"
+                style={{ fontSize: "clamp(32px, 4vw, 52px)" }}
+              >
+                165+
+              </span>
+              <span className="text-areia/50 text-[10px] tracking-[0.2em] uppercase">
+                apresentações
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Divisor */}
+          <motion.div
+            initial={shouldReduce ? false : { scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.42, ease }}
+            className="h-px bg-dourado/25 mb-10 origin-left"
+          />
+
+          {/* Texto */}
+          <motion.p
+            initial={shouldReduce ? false : { opacity: 0, y: 14 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.52, ease }}
+            className="text-areia/65 text-base leading-[1.85] mb-8 max-w-[420px]"
+          >
             Criado com o apoio do Edital Fomento Cidade Olímpica em 2016,
             Pé de Cachimbo completou 10 anos em cartaz em 2026.
             Mais de 165 apresentações. Premiado pelo Zilka Salaberry.
             O mesmo espetáculo que ganhou o primeiro fomento ainda
             está em cartaz neste teatro, hoje.
-          </p>
-          <div className="h-px bg-dourado/30 mb-6" />
-          <blockquote className="font-display font-light italic text-areia/90 leading-snug mb-8" style={{ fontSize: "clamp(18px, 2.5vw, 26px)" }}>
-            "O investimento público pode gerar futuro."
-          </blockquote>
-          <motion.a
-            href="#historia"
-            whileHover={shouldReduce ? {} : { scale: 1.03 }}
-            whileTap={shouldReduce ? {} : { scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-dourado text-oceano text-[11px] tracking-[0.18em] uppercase font-semibold rounded-full hover:bg-dourado/90 transition-colors duration-200"
+          </motion.p>
+
+          {/* Blockquote */}
+          <motion.blockquote
+            initial={shouldReduce ? false : { opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.66, ease }}
+            className="font-display font-light italic text-areia/80 leading-snug"
+            style={{ fontSize: "clamp(17px, 2.2vw, 24px)" }}
           >
-            Ver trajetória
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </motion.a>
-        </motion.div>
+            "O investimento público pode gerar futuro."
+          </motion.blockquote>
+
+        </div>
       </div>
     </section>
   );

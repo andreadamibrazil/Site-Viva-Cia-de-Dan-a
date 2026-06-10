@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView, motion, useReducedMotion } from "framer-motion";
 
 const stats = [
-  { value: 12,  suffix: "",  label: "ANOS DE HISTÓRIA" },
+  { value: 14,  suffix: "",  label: "ANOS DE HISTÓRIA" },
   { value: 21,  suffix: "+", label: "PRÊMIOS E EDITAIS" },
   { value: 165, suffix: "+", label: "APRESENTAÇÕES DO ESPETÁCULO DE ESTREIA" },
   { value: 12,  suffix: "",  label: "ESPETÁCULOS PRODUZIDOS" },

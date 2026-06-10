@@ -1,11 +1,12 @@
 "use client";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
 export function PeDeCachimbo() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduce = useReducedMotion();
 
   return (
     <section
@@ -34,7 +35,7 @@ export function PeDeCachimbo() {
       <div className="relative z-10 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-16 md:gap-24 items-center">
         {/* Esquerda — números grandes */}
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
+          initial={shouldReduce ? false : { opacity: 0, x: -40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         >
@@ -70,7 +71,7 @@ export function PeDeCachimbo() {
 
         {/* Direita — texto */}
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
+          initial={shouldReduce ? false : { opacity: 0, x: 40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
@@ -91,8 +92,8 @@ export function PeDeCachimbo() {
           </blockquote>
           <motion.a
             href="#contato"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={shouldReduce ? {} : { scale: 1.03 }}
+            whileTap={shouldReduce ? {} : { scale: 0.97 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-dourado text-oceano text-[11px] tracking-[0.18em] uppercase font-semibold rounded-full hover:bg-dourado/90 transition-colors duration-200"
           >

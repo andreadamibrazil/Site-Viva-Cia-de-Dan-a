@@ -73,15 +73,16 @@ export function Impacto() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.15 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-col gap-1.5 border-l-2 border-dourado/20 pl-4"
+                  className="flex flex-col gap-1.5"
                 >
+                  <span className="block w-6 h-px bg-dourado/35 mb-1" />
                   <span
                     className="font-display font-bold text-areia leading-none tabular-nums"
                     style={{ fontSize: "clamp(22px, 2.4vw, 32px)" }}
                   >
                     {s.value}
                   </span>
-                  <span className="text-areia/40 text-[11px] tracking-[0.12em] uppercase leading-tight">
+                  <span className="text-areia/45 text-[11px] tracking-[0.12em] uppercase leading-tight">
                     {s.label}
                   </span>
                 </motion.div>

@@ -14,25 +14,56 @@
   --font-display: "Plus Jakarta Sans", sans-serif;
   --font-body:    "Inter", sans-serif;
 
+  /* === ESCALA TIPOGRÁFICA (clamp responsivo)
+   * Usar via style={{ fontSize: "var(--text-*)" }} ou direto via clamp()
+   * display-xl  → título VIVÁ no hero
+   * display-lg  → headings grandes de seção
+   * display-md  → headings de seção normais
+   * display-sm  → subtítulos, captions grandes
+   * heading     → títulos de componente
+   * sub         → rótulos ampliados, números médios
+   */
+  --text-display-xl: clamp(80px, 13vw, 172px);
+  --text-display-lg: clamp(36px, 5.5vw, 72px);
+  --text-display-md: clamp(28px, 4vw, 52px);
+  --text-display-sm: clamp(24px, 3.5vw, 44px);
+  --text-heading:    clamp(18px, 2vw, 24px);
+  --text-sub:        clamp(14px, 1.5vw, 16px);
+
   /* === RAIO — hierarquia sharp/arquitetural ===
-   * none → bordas, divisores, elementos estruturais
+   * none → bordas, divisores, full-bleed, foto strips
    * xs   → tags, badges, micro elementos inline
-   * sm   → cards, containers (padrão do sistema)
-   * md   → botões, inputs interativos
-   * pill → pílulas, indicadores arredondados
+   * sm   → posters de espetáculo (3×4)
+   * md   → inputs, elementos interativos menores
+   * lg   → containers maiores, cards feature
+   * pill → botões CTA, social icons, nav arrows
    */
   --radius-none: 0px;
   --radius-xs:   2px;
-  --radius-sm:   3px;
+  --radius-sm:   4px;
   --radius-md:   6px;
+  --radius-lg:   12px;
   --radius-pill: 9999px;
 
+  /* === ESPAÇAMENTO DE SEÇÃO (múltiplos de 4px)
+   * Usar em py-section-* / pt-section-* / pb-section-*
+   * xs  → seções compactas (footer, contato)
+   * sm  → seções menores
+   * md  → padrão da maioria das seções (≈ py-24 md:py-36)
+   * lg  → seções de destaque
+   * xl  → hero, seções âncora
+   */
+  --spacing-section-xs: 48px;
+  --spacing-section-sm: 64px;
+  --spacing-section-md: 96px;
+  --spacing-section-lg: 128px;
+  --spacing-section-xl: 160px;
+
   /* === SOMBRAS — tintadas com oceano ===
-   * Elevação em 4 estágios.
-   * sm  → hover de card
-   * md  → elemento elevado (dropdown, tooltip)
-   * lg  → overlay, modal
-   * glow → destaque dourado (CTA, tag ativa)
+   * sm   → hover sutil de card
+   * md   → elemento elevado (dropdown, tooltip)
+   * lg   → overlay, modal
+   * glow → destaque dourado (CTA ativo, tag em destaque)
    */
   --shadow-sm:   0 1px 4px rgba(6,43,79,0.15);
   --shadow-md:   0 4px 16px rgba(6,43,79,0.20);
@@ -40,10 +71,32 @@
   --shadow-glow: 0 0 32px rgba(199,154,66,0.18);
 }
 
-/* Curvas de easing — usar via var() nos componentes */
+/* Curvas de easing — usar via var() nos componentes e Framer Motion */
 :root {
   --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-expo: cubic-bezier(0.70, 0, 0.84, 0);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === KEYFRAMES === */
+@keyframes clip-up {
+  from { clip-path: inset(100% 0 0 0); opacity: 0; }
+  to   { clip-path: inset(0% 0 0 0);   opacity: 1; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0);    }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.4; }
 }
 
 html {
@@ -85,12 +138,15 @@ body {
     font-weight: 600;
   }
 
+  /* Animações declarativas (alternativa ao Framer Motion para casos simples) */
+  .animate-clip-up  { animation: clip-up  0.5s var(--ease-expo) both; }
+  .animate-fade-up  { animation: fade-up  0.3s var(--ease-expo) both; }
+  .animate-marquee  { animation: marquee 35s linear infinite; }
+
   /* Esconde scrollbar mas mantém scroll funcional */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }

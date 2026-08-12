@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Footer } from "@/components/Footer";
 import { SetHtmlLang } from "./SetHtmlLang";
 import { COPY, FATOS, LANGS, type Lang } from "./content";
 
@@ -299,7 +298,45 @@ export function InternacionalView({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <Footer />
+      {/* Rodapé próprio: o Footer da home usa âncoras que não existem aqui
+          (#historia, #espetaculos, #pe-de-cachimbo, #impacto) e tem rótulos
+          fixos em português — daria 12 links mortos nas três rotas. */}
+      <footer className="bg-oceano px-6 py-14 text-brisa">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <p className="max-w-md text-sm leading-relaxed text-areia/60">{t.rodape}</p>
+          <div className="flex flex-wrap items-center gap-5">
+            <a
+              href={`mailto:${FATOS.email}`}
+              className="text-sm font-semibold text-areia/80 transition-colors hover:text-areia"
+            >
+              {FATOS.email}
+            </a>
+            <a
+              href={FATOS.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-areia/80 transition-colors hover:text-areia"
+            >
+              Instagram
+            </a>
+            <a
+              href={FATOS.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-areia/80 transition-colors hover:text-areia"
+            >
+              YouTube
+            </a>
+            <Link
+              href="/"
+              className="text-sm font-semibold text-areia/80 transition-colors hover:text-areia"
+            >
+              {t.voltar}
+            </Link>
+            <Idiomas atual={lang} escuro />
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

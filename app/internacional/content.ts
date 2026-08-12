@@ -15,9 +15,9 @@ export const LANGS: { code: Lang; label: string; href: string; htmlLang: string 
 
 export const FATOS = {
   anos: "14",
-  espetaculos: "12",
+  espetaculos: "10",
   premios: "21+",
-  apresentacoes: "165+",
+  apresentacoes: "150+",
   desde: "2012",
   email: "vivaciadedanca@gmail.com",
   instagram: "https://instagram.com/vivaciadedanca",
@@ -60,6 +60,7 @@ export type Copy = {
   contatoTitulo: string;
   contatoLead: string;
   voltar: string;
+  rodape: string;
 };
 
 const FOTO_PE = "/fotos/pe-de-cachimbo.jpg";
@@ -76,9 +77,9 @@ export const COPY: Record<Lang, Copy> = {
     numerosTitulo: "A companhia",
     numeros: [
       { n: FATOS.anos, l: "anos de história, sem um ano em branco" },
-      { n: FATOS.espetaculos, l: "espetáculos produzidos" },
+      { n: FATOS.espetaculos, l: "obras no repertório oficial" },
       { n: FATOS.premios, l: "prêmios e editais" },
-      { n: FATOS.apresentacoes, l: "apresentações do espetáculo de estreia" },
+      { n: FATOS.apresentacoes, l: "apresentações do repertório" },
     ],
     catalogoTitulo: "Catálogo de repertório",
     catalogoLead:
@@ -94,7 +95,7 @@ export const COPY: Record<Lang, Copy> = {
           ["Público", "Livre, com forte adesão de crianças, adolescentes e escolas"],
           ["Formatos", "Palco em caixa cênica convencional e versão adaptada para rua"],
           ["Acessibilidade", "Sessão adaptada para pessoas autistas, com psicopedagoga"],
-          ["Reconhecimento", "Prêmio Arte & Escola · menção honrosa no 11º Prêmio Zilka Salaberry"],
+          ["Reconhecimento", "Menção honrosa no 11º Prêmio Zilka Sallaberry de Teatro Infantil (2016) · Fomento Cidade Olímpica (2016) · ocupação do Teatro Glaucio Gill"],
           ["Já circulou por", "FUNARTE, FUNARJ, SESI-SP, SESC, Centro Coreográfico do Rio e rede pública de ensino"],
         ],
         foto: FOTO_PE,
@@ -102,7 +103,7 @@ export const COPY: Record<Lang, Copy> = {
       },
       {
         titulo: "Sobre as Ondas do Mar",
-        ano: "2015",
+        ano: "2014",
         tag: "Música brasileira em cena",
         sinopse:
           "Livremente inspirado nas canções de Dorival Caymmi. O mar, a Bahia e o cancioneiro brasileiro traduzidos em movimento. Abriu o 7º Festival Amazonas de Dança, no Teatro Amazonas, em Manaus.",
@@ -159,6 +160,11 @@ export const COPY: Record<Lang, Copy> = {
           "A direção da companhia representou o Brasil no MICA 2023, na Argentina, selecionada pelo Ministério da Cultura, e integra o International Dance Council, organização parceira da UNESCO.",
       },
       {
+        titulo: "Prêmios com registro oficial",
+        texto:
+          "3º lugar no Prêmio de Dança da FUNARJ 2022 com Curu-MIM, em ata da comissão de seleção. E o Prêmio Funarte Mestras e Mestres das Artes, com a companhia como proponente da mestra Marly Tavares, no resultado oficial de 2026.",
+      },
+      {
         titulo: "Intercâmbio ibero-americano",
         texto:
           "A companhia integrou a programação do MoviRio Festival na edição selecionada pelo Iberescena, fundo da SEGIB com 17 países, ao lado da Cia Cláudio Bernardo, da Bélgica.",
@@ -171,6 +177,8 @@ export const COPY: Record<Lang, Copy> = {
     contatoLead:
       "Direção e coreografia: Carlos Fontinelle. Atendemos em português, espanhol e inglês.",
     voltar: "Ir para o site da companhia",
+    rodape:
+      "Vivá Cia de Dança · dança contemporânea autoral · Rio de Janeiro, Brasil · desde 2012",
   },
 
   en: {
@@ -183,9 +191,9 @@ export const COPY: Record<Lang, Copy> = {
     numerosTitulo: "The company",
     numeros: [
       { n: FATOS.anos, l: "years of history, without a single blank year" },
-      { n: FATOS.espetaculos, l: "productions created" },
+      { n: FATOS.espetaculos, l: "works in the official repertoire" },
       { n: FATOS.premios, l: "awards and public grants" },
-      { n: FATOS.apresentacoes, l: "performances of the debut piece" },
+      { n: FATOS.apresentacoes, l: "performances of the repertoire" },
     ],
     catalogoTitulo: "Repertoire catalogue",
     catalogoLead:
@@ -201,7 +209,7 @@ export const COPY: Record<Lang, Copy> = {
           ["Audience", "All ages, with strong appeal for children, teenagers and schools"],
           ["Formats", "Conventional stage version and an adapted version for street and open air"],
           ["Accessibility", "Autism-friendly adapted session, with a specialist educator"],
-          ["Recognition", "Arte & Escola Award · honourable mention at the 11th Zilka Salaberry Award"],
+          ["Recognition", "Honourable mention at the 11th Zilka Sallaberry Award for children's theatre (2016) · Cidade Olímpica grant (2016) · residency at Teatro Glaucio Gill"],
           ["Presented by", "FUNARTE, FUNARJ, SESI-SP, SESC, Rio's Choreographic Centre and public schools"],
         ],
         foto: FOTO_PE,
@@ -209,7 +217,7 @@ export const COPY: Record<Lang, Copy> = {
       },
       {
         titulo: "Sobre as Ondas do Mar",
-        ano: "2015",
+        ano: "2014",
         tag: "Brazilian music on stage",
         sinopse:
           "Freely inspired by the songs of Dorival Caymmi. The sea, Bahia and the Brazilian songbook translated into movement. It opened the 7th Amazonas Dance Festival at the Teatro Amazonas, in Manaus.",
@@ -266,6 +274,11 @@ export const COPY: Record<Lang, Copy> = {
           "The company's director represented Brazil at MICA 2023 in Argentina, selected by the Ministry of Culture, and is a member of the International Dance Council, a UNESCO partner organisation.",
       },
       {
+        titulo: "Officially recorded awards",
+        texto:
+          "Third place at the FUNARJ Dance Award 2022 with Curu-MIM, recorded in the selection committee minutes. And the Funarte Masters of the Arts Award, with the company as the proponent for master Marly Tavares, in the official 2026 results.",
+      },
+      {
         titulo: "Ibero-American exchange",
         texto:
           "The company performed at MoviRio Festival in the edition selected by Iberescena, the SEGIB fund with 17 member countries, alongside Cia Cláudio Bernardo, from Belgium.",
@@ -278,6 +291,8 @@ export const COPY: Record<Lang, Copy> = {
     contatoLead:
       "Direction and choreography: Carlos Fontinelle. We work in Portuguese, Spanish and English.",
     voltar: "Go to the company website",
+    rodape:
+      "Vivá Cia de Dança · original contemporary dance · Rio de Janeiro, Brazil · since 2012",
   },
 
   es: {
@@ -290,9 +305,9 @@ export const COPY: Record<Lang, Copy> = {
     numerosTitulo: "La compañía",
     numeros: [
       { n: FATOS.anos, l: "años de historia, sin un año en blanco" },
-      { n: FATOS.espetaculos, l: "espectáculos producidos" },
+      { n: FATOS.espetaculos, l: "obras en el repertorio oficial" },
       { n: FATOS.premios, l: "premios y convocatorias" },
-      { n: FATOS.apresentacoes, l: "funciones del espectáculo de estreno" },
+      { n: FATOS.apresentacoes, l: "funciones del repertorio" },
     ],
     catalogoTitulo: "Catálogo de repertorio",
     catalogoLead:
@@ -308,7 +323,7 @@ export const COPY: Record<Lang, Copy> = {
           ["Público", "Todas las edades, con fuerte adhesión de niños, adolescentes y escuelas"],
           ["Formatos", "Versión de sala y versión adaptada para calle y espacios abiertos"],
           ["Accesibilidad", "Función adaptada para personas autistas, con psicopedagoga"],
-          ["Reconocimiento", "Premio Arte & Escola · mención de honor en el 11º Premio Zilka Salaberry"],
+          ["Reconocimiento", "Mención de honor en el 11º Premio Zilka Sallaberry de Teatro Infantil (2016) · Fomento Cidade Olímpica (2016) · ocupación del Teatro Glaucio Gill"],
           ["Presentada por", "FUNARTE, FUNARJ, SESI-SP, SESC, Centro Coreográfico de Río y escuelas públicas"],
         ],
         foto: FOTO_PE,
@@ -316,7 +331,7 @@ export const COPY: Record<Lang, Copy> = {
       },
       {
         titulo: "Sobre as Ondas do Mar",
-        ano: "2015",
+        ano: "2014",
         tag: "Música brasileña en escena",
         sinopse:
           "Libremente inspirada en las canciones de Dorival Caymmi. El mar, Bahía y el cancionero brasileño traducidos en movimiento. Abrió el 7º Festival Amazonas de Danza, en el Teatro Amazonas, en Manaos.",
@@ -373,6 +388,11 @@ export const COPY: Record<Lang, Copy> = {
           "La dirección de la compañía representó a Brasil en el MICA 2023, en Argentina, seleccionada por el Ministerio de Cultura, e integra el International Dance Council, organización socia de la UNESCO.",
       },
       {
+        titulo: "Premios con registro oficial",
+        texto:
+          "Tercer lugar en el Premio de Danza de FUNARJ 2022 con Curu-MIM, en acta de la comisión de selección. Y el Premio Funarte Maestras y Maestros de las Artes, con la compañía como proponente de la maestra Marly Tavares, en el resultado oficial de 2026.",
+      },
+      {
         titulo: "Intercambio iberoamericano",
         texto:
           "La compañía integró la programación del MoviRio Festival en la edición seleccionada por Iberescena, fondo de la SEGIB con 17 países, junto a la Cia Cláudio Bernardo, de Bélgica.",
@@ -385,5 +405,7 @@ export const COPY: Record<Lang, Copy> = {
     contatoLead:
       "Dirección y coreografía: Carlos Fontinelle. Atendemos en portugués, español e inglés.",
     voltar: "Ir al sitio de la compañía",
+    rodape:
+      "Vivá Cia de Danza · danza contemporánea de autor · Río de Janeiro, Brasil · desde 2012",
   },
 };
